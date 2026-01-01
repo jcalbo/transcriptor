@@ -1,0 +1,21 @@
+[project]
+name = "jorge-transcript"
+version = "0.1.0"
+description = "Aplicación de transcripción de audio usando Whisper con GPU"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "torch>=2.0.0",
+    "transformers>=4.35.0",
+    "accelerate>=0.24.0",
+    "insanely-fast-whisper>=0.0.13",
+    "ffmpeg-python>=0.2.0",
+    "optimum>=1.14.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]

@@ -1,0 +1,48 @@
+# Python-generated files
+# Entorno virtual
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Archivos de audio (pueden ser grandes)
+input/*.mp3
+input/*.m4a
+input/*.wav
+input/*.flac
+output/*.txt
+output/*.json
+output/*.srt
+
+# Modelos descargados (pueden ser muy grandes)
+models/
+*.bin
+*.pt
+*.pth
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Jupyter notebooks (si usas)
+.ipynb_checkpoints/
+*.ipynb
