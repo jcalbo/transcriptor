@@ -6,10 +6,11 @@ Aplicación de transcripción de audio usando Whisper con aceleración GPU (NVID
 
 - ✅ Transcripción de audio con modelos Whisper de OpenAI
 - ✅ Aceleración por GPU (NVIDIA CUDA)
+- ✅ **Interfaz Web (Streamlit) y CLI**
 - ✅ Soporte para múltiples formatos de audio (mp3, m4a, wav, flac, ogg, opus, webm)
 - ✅ Exportación en varios formatos (txt, json, srt, vtt)
 - ✅ Procesamiento batch de múltiples archivos
-- ✅ Interfaz de línea de comandos completa
+- ✅ Auto-detección de idioma
 - ✅ Timestamps automáticos para generación de subtítulos
 
 ## 📋 Requisitos del Sistema
@@ -70,6 +71,33 @@ python scripts/check_gpu.py
 Deberías ver un mensaje confirmando que la GPU está disponible y funcionando.
 
 ## 📖 Uso
+
+### 🌐 Interfaz Web (Recomendado)
+
+La forma más fácil de usar la aplicación es a través de la interfaz web:
+
+```bash
+# Activar entorno virtual
+source .venv/bin/activate
+
+# Iniciar la aplicación web
+streamlit run streamlit_app.py
+```
+
+Se abrirá automáticamente en tu navegador (`http://localhost:8501`).
+
+**Características de la interfaz web:**
+- 🎤 Upload de archivos drag & drop
+- 📊 Monitoreo de GPU en tiempo real
+- 📁 Procesamiento batch con descarga en ZIP
+- ⚙️ Configuración visual de parámetros
+- 📥 Descarga en múltiples formatos simultáneos
+
+Ver [STREAMLIT.md](STREAMLIT.md) para más detalles.
+
+---
+
+### 💻 Interfaz CLI (Línea de Comandos)
 
 ### 🌍 Auto-Detección de Idioma (Nuevo)
 
