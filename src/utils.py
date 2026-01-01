@@ -11,7 +11,7 @@ from datetime import timedelta
 
 
 # Formatos de audio soportados
-SUPPORTED_FORMATS = {'.mp3', '.m4a', '.wav', '.flac', '.ogg', '.opus', '.webm'}
+SUPPORTED_FORMATS = {'.mp3', '.wav', '.flac', '.ogg', '.opus', '.webm'}
 
 
 def validate_audio_file(file_path: str) -> bool:

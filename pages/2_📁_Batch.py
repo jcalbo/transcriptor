@@ -67,7 +67,7 @@ def main():
     # Upload múltiple
     uploaded_files = st.file_uploader(
         "Selecciona uno o más archivos de audio",
-        type=['mp3', 'm4a', 'wav', 'flac', 'ogg', 'opus', 'webm'],
+        type=['mp3', 'wav', 'flac', 'ogg', 'opus', 'webm'],
         accept_multiple_files=True,
         help="Puedes seleccionar múltiples archivos para procesarlos en batch"
     )
@@ -147,6 +147,12 @@ def main():
                 ['txt', 'json', 'srt', 'vtt'],
                 default=['txt'],
                 help="Todos los archivos se exportarán en estos formatos"
+            )
+            
+            save_to_disk = st.checkbox(
+                "💾 Guardar también en servidor",
+                value=False,
+                help="Los archivos se guardarán en ./output/ además del ZIP"
             )
             
             continue_on_error = st.checkbox(
@@ -276,6 +282,44 @@ def main():
             st.subheader("⬇️ Descargar Resultados")
             
             if successful > 0:
+                # Guardar en disco si está activado
+                if save_to_disk:
+                    from src.utils import (
+                        export_as_txt, export_as_json,
+                        export_as_srt, export_as_vtt,
+                        get_output_path, ensure_directory
+                    )
+                    
+                    ensure_directory("output")
+                    saved_count = 0
+                    
+                    with st.spinner("💾 Guardando en servidor..."):
+                        for res in results:
+                            if not res['success']:
+                                continue
+                            
+                            result_data = res['result']
+                            
+                            try:
+                                for fmt in formats:
+                                    output_path = get_output_path(res['filename'], "output", fmt)
+                                    
+                                    if fmt == 'txt':
+                                        export_as_txt(result_data, output_path)
+                                    elif fmt == 'json':
+                                        export_as_json(result_data, output_path)
+                                    elif fmt == 'srt' and include_timestamps:
+                                        export_as_srt(result_data, output_path)
+                                    elif fmt == 'vtt' and include_timestamps:
+                                        export_as_vtt(result_data, output_path)
+                                
+                                saved_count += 1
+                            except Exception as e:
+                                st.warning(f"⚠️ Error guardando {res['filename']}: {e}")
+                    
+                    if saved_count > 0:
+                        st.success(f"✅ {saved_count} archivo(s) guardados en `./output/`")
+                
                 # Crear ZIP con todos los resultados
                 zip_buffer = BytesIO()
                 

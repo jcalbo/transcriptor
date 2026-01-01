@@ -7,11 +7,12 @@ Aplicación de transcripción de audio usando Whisper con aceleración GPU (NVID
 - ✅ Transcripción de audio con modelos Whisper de OpenAI
 - ✅ Aceleración por GPU (NVIDIA CUDA)
 - ✅ **Interfaz Web (Streamlit) y CLI**
-- ✅ Soporte para múltiples formatos de audio (mp3, m4a, wav, flac, ogg, opus, webm)
+- ✅ Soporte para múltiples formatos de audio (mp3, wav, flac, ogg, opus, webm)
 - ✅ Exportación en varios formatos (txt, json, srt, vtt)
 - ✅ Procesamiento batch de múltiples archivos
 - ✅ Auto-detección de idioma
 - ✅ Timestamps automáticos para generación de subtítulos
+- ✅ Opción de guardar resultados en servidor (Streamlit)
 
 ## 📋 Requisitos del Sistema
 
@@ -307,13 +308,25 @@ jorge_transcript/
 
 ## 🎵 Formatos de Audio Soportados
 
-- **MP3** (.mp3)
-- **M4A** (.m4a)
-- **WAV** (.wav)
-- **FLAC** (.flac)
-- **OGG** (.ogg)
-- **Opus** (.opus)
-- **WebM** (.webm)
+- **MP3** (.mp3) ✅
+- **WAV** (.wav) ✅
+- **FLAC** (.flac) ✅
+- **OGG** (.ogg) ✅
+- **Opus** (.opus) ✅
+- **WebM** (.webm) ✅
+- **M4A** (.m4a) ⚠️ No soportado directamente
+
+### ⚠️ Nota sobre archivos M4A
+
+Los archivos M4A no son soportados directamente debido a limitaciones en la cadena de procesamiento (Transformers + FFmpeg). Si tienes archivos M4A, conviértelos a MP3 primero:
+
+```bash
+# Convertir M4A a MP3
+ffmpeg -i audio.m4a -acodec libmp3lame -ar 16000 audio.mp3
+
+# Luego transcribir
+python main.py --input audio.mp3
+```
 
 ## 🤖 Modelos Whisper Disponibles
 

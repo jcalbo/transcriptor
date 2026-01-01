@@ -76,8 +76,8 @@ def main():
     with col1:
         uploaded_file = st.file_uploader(
             "Selecciona un archivo de audio",
-            type=['mp3', 'm4a', 'wav', 'flac', 'ogg', 'opus', 'webm'],
-            help="Formatos soportados: MP3, M4A, WAV, FLAC, OGG, Opus, WebM"
+            type=['mp3', 'wav', 'flac', 'ogg', 'opus', 'webm'],
+            help="Formatos soportados: MP3, WAV, FLAC, OGG, Opus, WebM"
         )
     
     with col2:
@@ -184,13 +184,14 @@ def main():
             )
         
         with col2:
-            st.info("""
-            **Formatos disponibles:**
-            - TXT: Texto plano
-            - JSON: Con metadatos y timestamps
-            - SRT: Subtítulos (video)
-            - VTT: Subtítulos web
-            """)
+            save_to_disk = st.checkbox(
+                "💾 Guardar también en servidor",
+                value=False,
+                help="Los archivos se guardarán en ./output/ además de poder descargarlos"
+            )
+        
+        if save_to_disk:
+            st.info("📁 Los archivos se guardarán en: `./output/`")
     
     # Botón de transcripción
     st.markdown("---")
@@ -281,6 +282,42 @@ def main():
             # Botones de descarga
             st.markdown("---")
             st.subheader("⬇️ Descargar Transcripción")
+            
+            # Guardar en disco si está activado
+            saved_files = []
+            if save_to_disk:
+                from src.utils import (
+                    export_as_txt, export_as_json, 
+                    export_as_srt, export_as_vtt,
+                    get_output_path, ensure_directory
+                )
+                
+                # Asegurar que existe el directorio output
+                ensure_directory("output")
+                
+                with st.spinner("💾 Guardando en servidor..."):
+                    for fmt in formats:
+                        try:
+                            output_path = get_output_path(uploaded_file.name, "output", fmt)
+                            
+                            if fmt == 'txt':
+                                export_as_txt(result, output_path)
+                            elif fmt == 'json':
+                                export_as_json(result, output_path)
+                            elif fmt == 'srt' and include_timestamps:
+                                export_as_srt(result, output_path)
+                            elif fmt == 'vtt' and include_timestamps:
+                                export_as_vtt(result, output_path)
+                            
+                            saved_files.append(output_path)
+                        except Exception as e:
+                            st.warning(f"⚠️ No se pudo guardar {fmt}: {e}")
+                
+                if saved_files:
+                    st.success(f"✅ {len(saved_files)} archivo(s) guardado(s) en `./output/`")
+                    with st.expander("📁 Ver archivos guardados"):
+                        for file_path in saved_files:
+                            st.text(f"• {file_path}")
             
             if not formats:
                 st.warning("⚠️ Selecciona al menos un formato de exportación en las opciones avanzadas")

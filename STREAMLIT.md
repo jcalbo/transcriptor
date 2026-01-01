@@ -26,6 +26,7 @@ La aplicación se abrirá automáticamente en tu navegador en `http://localhost:
 - Selección de modelo y configuración
 - Preview del resultado en tiempo real
 - Descarga en múltiples formatos
+- **Opción de guardar en servidor** (./output/)
 - Métricas de rendimiento
 
 ### 📁 Procesamiento Batch
@@ -33,6 +34,7 @@ La aplicación se abrirá automáticamente en tu navegador en `http://localhost:
 - Procesamiento automático secuencial
 - Barra de progreso por archivo
 - Tabla de resultados
+- **Opción de guardar en servidor** (./output/)
 - Descarga de ZIP con todos los resultados
 
 ### ⚙️ Configuración
@@ -182,6 +184,11 @@ python -c "import torch; print(torch.cuda.is_available())"
 - ✅ Monitoreo de GPU en tiempo real
 - ✅ Preview de transcripciones
 - ✅ Descarga en múltiples formatos simultáneos
+- ✅ **Opción de guardar resultados en ./output/**
+
+**Formatos soportados:**
+- ✅ MP3, WAV, FLAC, OGG, Opus, WebM
+- ⚠️ M4A no soportado (convertir a MP3 primero)
 
 ---
 
